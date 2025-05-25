@@ -10,6 +10,7 @@ export const Colors = {
   light: {
     text: '#11181C',
     background: '#fff',
+    card: '#f8f9fa',
     tint: tintColorLight,
     icon: '#687076',
     tabIconDefault: '#687076',
@@ -18,9 +19,15 @@ export const Colors = {
   dark: {
     text: '#ECEDEE',
     background: '#151718',
+    card: '#1e1e1e',
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
-};
+} as const;
+
+type ColorScheme = keyof typeof Colors;
+type ColorKey = keyof typeof Colors.light;
+
+export type { ColorScheme, ColorKey };
