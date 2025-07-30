@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import * as FileSystem from 'expo-file-system';
 import { Colors } from '../../constants/Colors';
-import { JournalEntry, DayAbbreviation } from '../types/models';
+import { JournalEntry, DayAbbreviation } from '@app-types/models';
 
 // Using JournalEntry from '../types/models' instead of local HistoricalEntry interface
 
@@ -12,7 +12,7 @@ const JOURNAL_FILE_URI = FileSystem.documentDirectory + 'journal.md';
 
 const HomeScreen: React.FC = () => {
   const navigation = useNavigation<any>(); // Use 'any' for now, or define your StackParamList
-  const [currentDate, setCurrentDate] = React.useState(new Date());
+  const [currentDate] = React.useState(new Date());
   const [historicalEntries, setHistoricalEntries] = React.useState<JournalEntry[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -113,7 +113,7 @@ const HomeScreen: React.FC = () => {
 
       {/* 2. Add Today's Note Button */}
       <TouchableOpacity style={styles.addButton} onPress={handleAddTodaysNote}>
-        <Text style={styles.addButtonText}>Add Today's Note</Text>
+        <Text style={styles.addButtonText}>Add Today&apos;s Note</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.viewLogButton} onPress={handleViewLog}>

@@ -1,6 +1,5 @@
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { useTheme } from '@/hooks/useTheme';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import { useTheme } from '@hooks/useTheme';
 
 const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 const dates = Array.from({ length: 31 }, (_, i) => i + 1);

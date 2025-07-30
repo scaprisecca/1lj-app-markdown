@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity, Alert, ScrollView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
-import { AppSettings } from '../types/models';
+import { AppSettings } from '@app-types/models';
 import { Colors } from '../../constants/Colors';
 import * as DocumentPicker from 'expo-document-picker';
 import * as Notifications from 'expo-notifications';
@@ -26,28 +26,28 @@ const SettingsScreen: React.FC = () => {
     });
   }, []);
 
-  const defaultSettings: AppSettings = {
+  const defaultSettings = React.useMemo((): AppSettings => ({
     journalFilePath: DEFAULT_JOURNAL_PATH,
     notificationsEnabled: false,
     notificationTime: '09:00', // Default notification time
-  };
+  }), []);
 
   // Notification permission and scheduling functions
-  const requestPermissionsAsync = async () => {
+  const requestPermissionsAsync = useCallback(async () => {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status !== 'granted') {
       Alert.alert('Permission Denied', 'Cannot schedule notifications without permission.');
       return false;
     }
     return true;
-  };
+  }, []);
 
-  const cancelAllReminders = async () => {
+  const cancelAllReminders = useCallback(async () => {
     await Notifications.cancelAllScheduledNotificationsAsync();
     // console.log('All reminders cancelled');
-  };
+  }, []);
 
-  const scheduleDailyReminder = async (time: string) => {
+  const scheduleDailyReminder = useCallback(async (time: string) => {
     const hasPermission = await requestPermissionsAsync();
     if (!hasPermission) return;
 
@@ -58,7 +58,7 @@ const SettingsScreen: React.FC = () => {
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "Time for your daily journal!",
+          title: "Time for your daily journal&apos;!",
           body: 'Open the app to write down your thoughts and experiences.',
           sound: true, // Plays the default notification sound
         },
@@ -74,7 +74,7 @@ const SettingsScreen: React.FC = () => {
       console.error('Failed to schedule notification:', error);
       Alert.alert('Scheduling Error', 'Could not schedule the daily reminder.');
     }
-  };
+  }, [requestPermissionsAsync, cancelAllReminders]);
 
   // Load settings
   useEffect(() => {
@@ -95,7 +95,7 @@ const SettingsScreen: React.FC = () => {
       setIsLoading(false);
     };
     loadSettings();
-  }, []);
+  }, [defaultSettings]);
 
   // Save settings
   const saveSettings = useCallback(async (updatedSettings: AppSettings) => {
@@ -218,7 +218,7 @@ const SettingsScreen: React.FC = () => {
         <View style={styles.settingItemRow}>
           <Text style={styles.settingText}>Enable Daily Reminder</Text>
           <Switch
-            trackColor={{ false: Colors.light.icon, true: Colors.light.tintFaded }}
+            trackColor={{ false: Colors.light.icon, true: Colors.light.tint }}
             thumbColor={settings.notificationsEnabled ? Colors.light.tint : Colors.light.card}
             ios_backgroundColor={Colors.light.icon}
             onValueChange={(value) => handleSettingChange('notificationsEnabled', value)}

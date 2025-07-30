@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { DayAbbreviation, DAY_ABBREVIATIONS } from '../types/models';
+import { DayAbbreviation, DAY_ABBREVIATIONS, JournalEntry, AppSettings } from '../types/models';
 
 // Helper functions for common validations
 const isValidDate = (dateString: string): boolean => {
@@ -13,7 +13,7 @@ const isValidTime = (timeString: string): boolean => {
 
 // Schema for DayAbbreviation
 export const dayAbbreviationSchema = z.custom<DayAbbreviation>(
-  (val) => Object.values(DAY_ABBREVIATIONS).includes(val as DayAbbreviation),
+  (val: unknown) => Object.values(DAY_ABBREVIATIONS).includes(val as DayAbbreviation),
   {
     message: 'Invalid day abbreviation',
   }
@@ -24,7 +24,7 @@ export const journalEntrySchema = z.object({
   id: z.string().uuid('Invalid UUID format'),
   date: z.string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format')
-    .refine((val) => {
+    .refine((val: string) => {
       if (!isValidDate(val)) return false;
       const [year, month, day] = val.split('-').map(Number);
       const date = new Date(year, month - 1, day);

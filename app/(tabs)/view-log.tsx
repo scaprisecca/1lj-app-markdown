@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { useHeaderOptions } from '../../src/hooks/useHeaderOptions';
+import { useHeaderOptions } from '@hooks/useHeaderOptions';
 
 export default function ViewLogScreen() {
   useHeaderOptions({

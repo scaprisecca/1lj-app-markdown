@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView,
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../constants/Colors';
-import { DAY_ABBREVIATIONS, DayAbbreviation } from '../types/models';
+import { DAY_ABBREVIATIONS, DayAbbreviation } from '@app-types/models';
 
 // Helper to get day abbreviation
 const getDayAbbreviation = (date: Date): DayAbbreviation => {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../constants/Colors';
 import * as FileSystem from 'expo-file-system';
 import Markdown from 'react-native-markdown-display';
@@ -8,7 +7,6 @@ import Markdown from 'react-native-markdown-display';
 const JOURNAL_FILE_URI = FileSystem.documentDirectory + 'journal.md';
 
 const ViewLogScreen: React.FC = () => {
-  const navigation = useNavigation();
   const [logContent, setLogContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const markdownStyles = {
+const markdownStyles = StyleSheet.create({
   heading1: {
     color: Colors.light.tint,
     marginTop: 15,
@@ -179,6 +177,6 @@ const markdownStyles = {
     marginRight: 8,
     lineHeight: 24, // Match body lineHeight
   },
-};
+});
 
 export default ViewLogScreen;

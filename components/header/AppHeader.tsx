@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Modal, Platform } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
 import { IconSymbol } from '../ui/IconSymbol';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { Colors } from '@/constants/Colors';
+import { useColorScheme } from '@hooks/useColorScheme';
+import { Colors } from '@constants/Colors';
 
 type MarkedDates = {
   [date: string]: {

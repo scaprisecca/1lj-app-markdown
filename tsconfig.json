@@ -5,28 +5,36 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@constants/*": ["./src/constants/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@types/*": ["./src/types/*"]
+      "@components/*": ["./components/*"],
+      "@constants/*": ["./constants/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@app-types/*": ["./types/*"],
+      "@utils/*": ["./utils/*"]
     },
     "typeRoots": [
       "./node_modules/@types",
-      "./src/types"
+      "./types"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "jsx": "react-native"
+    "jsx": "react-native",
+    "lib": ["esnext", "dom"]
   },
   "include": [
     "./src/**/*.ts",
     "./src/**/*.tsx",
     "./app/**/*.tsx",
     "./app/**/*.ts",
+    "./components/**/*.ts",
+    "./components/**/*.tsx",
+    "./constants/**/*.ts",
+    "./hooks/**/*.ts",
+    "./hooks/**/*.tsx",
+    "./types/**/*.ts",
+    "./utils/**/*.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "src/types/expo-vector-icons.d.ts"
+    "expo-env.d.ts"
   ],
   "exclude": [
     "node_modules",

@@ -5,9 +5,8 @@ import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import * as Notifications from 'expo-notifications';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { useHeaderOptions } from '@/hooks/useHeaderOptions';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import { useTheme } from '@/hooks/useTheme';
+import { useHeaderOptions } from '@hooks/useHeaderOptions';
+import { useTheme } from '@hooks/useTheme';
 
 type AppSettings = {
   journalFilePath: string;
@@ -71,20 +70,20 @@ export default function SettingsScreen() {
   });
 
   // Notification functions
-  const requestPermissionsAsync = async () => {
+  const requestPermissionsAsync = useCallback(async () => {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status !== 'granted') {
       Alert.alert('Permission Denied', 'Cannot schedule notifications without permission.');
       return false;
     }
     return true;
-  };
+  }, []);
 
-  const cancelAllReminders = async () => {
+  const cancelAllReminders = useCallback(async () => {
     await Notifications.cancelAllScheduledNotificationsAsync();
-  };
+  }, []);
 
-  const scheduleDailyReminder = async (time: string) => {
+  const scheduleDailyReminder = useCallback(async (time: string) => {
     const hasPermission = await requestPermissionsAsync();
     if (!hasPermission) return;
 
@@ -110,7 +109,7 @@ export default function SettingsScreen() {
       console.error('Failed to schedule notification:', error);
       Alert.alert('Scheduling Error', 'Could not schedule the daily reminder.');
     }
-  };
+  }, [requestPermissionsAsync, cancelAllReminders]);
 
   // Save settings
   const saveSettings = useCallback(async (updatedSettings: AppSettings) => {
@@ -137,7 +136,7 @@ export default function SettingsScreen() {
       console.error('Failed to save settings or update notification:', error);
       Alert.alert('Error', 'Failed to save settings or update notification schedule.');
     }
-  }, [settings]);
+  }, [settings, scheduleDailyReminder, cancelAllReminders]);
 
   const handleSettingChange = <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => {
     if (settings) {
